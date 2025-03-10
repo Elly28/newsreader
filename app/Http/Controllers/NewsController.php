@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsArticle;
+use App\Models\SoccerNews;
 use jcobhams\NewsApi\NewsApi;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 
 class NewsController extends Controller
 {    
@@ -15,18 +15,30 @@ class NewsController extends Controller
      * @return void
      */
     public function index() {
-
+                
+        $latestSoccerNews = SoccerNews::latest()->paginate(10);
         $news = NewsArticle::latest()->paginate(10);//get latest news articles from the database & paginate with 10 articles per page
         $latestArticles = NewsArticle::orderBy('created_at', 'desc')->take(3)->get();
         $latestArticle = NewsArticle::latest()->first(['title', 'content', 'category', 'published_at']);
-
-        // $topNews = NewsArticle::where('published_at', '>=', now()->subDays(7))
-        // ->orderBy('views', 'desc') // Order by most viewed articles
-        // ->take(5) // Limit to top 5 articles
-        // ->get();
+        $categories = ["General", "Sport", "Lifestyle", "Travel", "Technology"];
         $weeklyTopNews = NewsArticle::where('published_at', '>=', now()->subDays(7))->take(5)->get();
 
-        return view('welcome', compact('news', 'latestArticles', 'latestArticle', 'weeklyTopNews'));
+        $trendingNews = [
+            [
+            "title" =>"This is an example of what will be displayed, this is first slide",
+            "link" =>"https://www.google.com",
+            ],
+            [
+            "title" =>"This is an example of what will be displayed, this is second slide",
+            "link" =>"https://www.google.com",
+            ],
+            [
+            "title" =>"This is an example of what will be displayed, this is third slide",
+            "link" =>"https://www.google.com",
+            ]
+        ];
+
+        return view('welcome', compact('news', 'latestArticles', 'latestArticle', 'weeklyTopNews', 'categories', 'trendingNews', 'latestSoccerNews'));
     }
 
         
@@ -77,40 +89,6 @@ class NewsController extends Controller
                     'published_at' => $published_at,
                 ]
             );
-        }
-
-        $this->fetchLatestSoccerNews();
-
-        return redirect('/')->with('success', 'News updated successfully!');
-    }
-
-    public function fetchLatestSoccerNews(){
-        $client = new Client();
-
-        $response = $client->request('GET', 'https://real-time-sports-news-api.p.rapidapi.com/live-articles', [
-            'headers' => [
-                'x-rapidapi-host' => 'real-time-sports-news-api.p.rapidapi.com',
-                'x-rapidapi-key' => '4d1a3aae23msh6ec3258aedc6030p1bc537jsn8d62e6d76cb4',
-            ],
-        ]);
-
-        $articles = $response->getBody() ?? [];
-
-        if (!$articles) {
-            foreach (json_decode($response->getBody(), true) as $article) {
-                $dateString = $article['pubDate'];
-                $published_at = Carbon::createFromFormat('D, d M Y H:i:s', $dateString)->format('Y-m-d H:i:s') ?? now();
-
-                NewsArticle::updateOrCreate(
-                    ['title' => trim($article->title)],
-                    [
-                        'content' => trim($article->content) ?? 'No content available',
-                        'category' => 'Sport',
-                        'source' => $article['provider'] ?? 'Unknown',
-                        'published_at' => $published_at,
-                    ]
-                );
-            }
         }
     }
     
