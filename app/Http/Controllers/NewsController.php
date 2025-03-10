@@ -17,9 +17,8 @@ class NewsController extends Controller
     public function index() {
                 
         $latestSoccerNews = SoccerNews::latest()->paginate(10);
-        $news = NewsArticle::latest()->paginate(10);//get latest news articles from the database & paginate with 10 articles per page
-        $latestArticles = NewsArticle::orderBy('created_at', 'desc')->take(3)->get();
-        $latestArticle = NewsArticle::latest()->first(['title', 'content', 'category', 'published_at']);
+        $latestArticles = NewsArticle::orderBy('created_at', 'desc')->get();
+        
         $categories = ["General", "Sport", "Lifestyle", "Travel", "Technology"];
         $weeklyTopNews = NewsArticle::where('published_at', '>=', now()->subDays(7))->take(5)->get();
 
@@ -38,7 +37,7 @@ class NewsController extends Controller
             ]
         ];
 
-        return view('welcome', compact('news', 'latestArticles', 'latestArticle', 'weeklyTopNews', 'categories', 'trendingNews', 'latestSoccerNews'));
+        return view('welcome', compact('latestArticles', 'weeklyTopNews', 'categories', 'trendingNews', 'latestSoccerNews'));
     }
 
         
