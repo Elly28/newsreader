@@ -22,22 +22,7 @@ class NewsController extends Controller
         $categories = ["General", "Sport", "Lifestyle", "Travel", "Technology"];
         $weeklyTopNews = NewsArticle::where('published_at', '>=', now()->subDays(7))->take(5)->get();
 
-        $trendingNews = [
-            [
-            "title" =>"This is an example of what will be displayed, this is first slide",
-            "link" =>"https://www.google.com",
-            ],
-            [
-            "title" =>"This is an example of what will be displayed, this is second slide",
-            "link" =>"https://www.google.com",
-            ],
-            [
-            "title" =>"This is an example of what will be displayed, this is third slide",
-            "link" =>"https://www.google.com",
-            ]
-        ];
-
-        return view('welcome', compact('latestArticles', 'weeklyTopNews', 'categories', 'trendingNews', 'latestSoccerNews'));
+        return view('welcome', compact('latestArticles', 'weeklyTopNews', 'categories', 'latestSoccerNews'));
     }
 
         
@@ -49,7 +34,8 @@ class NewsController extends Controller
      */
     public function show($id) {
         $article = NewsArticle::findOrFail($id);
-        return view('news.show', compact('article'));
+        $categories = ["General", "Sport", "Lifestyle", "Travel", "Technology"];
+        return view('news.show', compact('article', 'categories'));
     }
     
     /**
@@ -59,8 +45,23 @@ class NewsController extends Controller
      * @return void
      */
     public function filterByCategory($category) {
-        $news = NewsArticle::where('category', $category)->latest()->paginate(10);
-        return view('news.index', compact('news'));
+        
+        switch ($category) {
+            case 'all':
+                //General
+                $articles = NewsArticle::latest()->take(4)->get();
+                return response()->json(['bool' => true, 'data' => $articles], 200);
+                break;
+            case 'sports':
+                $articles = SoccerNews::latest()->take(4)->get();
+                return response()->json(['bool' => true, 'data' => $articles], 200);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        
     }
     
     /**

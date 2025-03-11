@@ -3,13 +3,21 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\SoccerNewsController;
 
 Route::get('/', [NewsController::class, 'index']);
-Route::get('/news/{id}', [NewsController::class, 'show']);
+Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/news/category/{category}', [NewsController::class, 'filterByCategory']);
 Route::get('/news/offline', [NewsController::class, 'offlineArticles']);
 Route::post('/news/{id}/save-offline', [NewsController::class, 'saveForOffline']);
-Route::get('/fetch-news', [NewsController::class, 'fetchLatestNews'])->name('latest-news');
+// Route::get('/fetch-news', [NewsController::class, 'fetchLatestNews'])->name('latest-news');
+
+Route::get('/sportsnews/{id}', [SoccerNewsController::class, 'show'])->name('sportsnews.show');
+
+Route::get('/contact', function () {
+    $categories = ["General", "Sport", "Lifestyle", "Travel", "Technology"];
+    return view('contact', compact('categories'));
+})->name('contact');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

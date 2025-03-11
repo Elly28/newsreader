@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NewsArticle;
 use App\Models\SoccerNews;
 use Illuminate\Http\Request;
 
@@ -84,9 +85,11 @@ class SoccerNewsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SoccerNews $soccerNews)
+    public function show($id)
     {
-        //
+        $article = NewsArticle::findOrFail($id);
+        $categories = ["General", "Sport", "Lifestyle", "Travel", "Technology"];
+        return view('news.show', compact('article', 'categories'));
     }
 
     /**

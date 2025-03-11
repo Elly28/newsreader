@@ -42,15 +42,15 @@
                             <div class="main-menu d-none d-md-block">
                                 <nav>                  
                                     <ul id="navigation">    
-                                        <li><a href="">Home</a></li>
+                                        <li><a href="/">Home</a></li>
                                         <li><a href="#">Category</a>
                                             <ul class="submenu">
                                                 @foreach ($categories as $category)
-                                                    <li><a href="#">{{ $category }}</a></li>
+                                                    <li><a href="{{ $category }}">{{ $category }}</a></li>
                                                 @endforeach
                                             </ul>
                                         </li>
-                                        <li><a href="">Contact</a></li>
+                                        <li><a href="{{ route('contact') }}">Contact</a></li>
                                     </ul>
                                 </nav>
                             </div>
