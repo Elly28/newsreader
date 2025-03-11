@@ -18,11 +18,16 @@ class NewsController extends Controller
                 
         $latestSoccerNews = SoccerNews::latest()->paginate(10);
         $latestArticles = NewsArticle::orderBy('created_at', 'desc')->get();
+
+        $mostReadNews = NewsArticle::orderBy('read_count', 'desc')->take(4)->get();
+        $mostReadSoccerNews = SoccerNews::orderBy('read_count', 'desc')->take(4)->get();
         
         $categories = ["General", "Sport", "Lifestyle", "Travel", "Technology"];
         $weeklyTopNews = NewsArticle::where('published_at', '>=', now()->subDays(7))->take(5)->get();
 
-        return view('welcome', compact('latestArticles', 'weeklyTopNews', 'categories', 'latestSoccerNews'));
+        return view('welcome', 
+            compact('latestArticles', 'weeklyTopNews', 'categories', 'latestSoccerNews', 'mostReadNews', 'mostReadSoccerNews')
+        );
     }
 
         
@@ -34,6 +39,7 @@ class NewsController extends Controller
      */
     public function show($id) {
         $article = NewsArticle::findOrFail($id);
+        $article->increment('read_count');
         $categories = ["General", "Sport", "Lifestyle", "Travel", "Technology"];
         return view('news.show', compact('article', 'categories'));
     }

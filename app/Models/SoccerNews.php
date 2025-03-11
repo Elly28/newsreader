@@ -13,6 +13,7 @@ class SoccerNews extends Model
         'title',
         'content',  // <-- Add 'content' here
         'link',
+        'read_count',
         'category',
         'source',
         'published_at',

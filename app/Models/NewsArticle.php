@@ -14,6 +14,7 @@ class NewsArticle extends Model
         'title',
         'content',
         'category',
+        'read_count',
         'source',
         'published_at',
     ];
