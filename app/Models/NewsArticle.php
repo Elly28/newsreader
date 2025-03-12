@@ -19,8 +19,10 @@ class NewsArticle extends Model
         'published_at',
     ];
 
-    public function usersWhoFavorited()
+    public function favoritedBy()
     {
-        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+        return $this->belongsToMany(User::class, 'favorites')
+                    ->withPivot('category') 
+                    ->withTimestamps();
     }
 }

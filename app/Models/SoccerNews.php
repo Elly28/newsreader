@@ -18,4 +18,11 @@ class SoccerNews extends Model
         'source',
         'published_at',
     ];
+
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites')
+                    ->withPivot('category') 
+                    ->withTimestamps();
+    }
 }

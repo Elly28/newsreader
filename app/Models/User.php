@@ -46,8 +46,24 @@ class User extends Authenticatable
         ];
     }
 
-    public function favoriteArticles()
+    public function favorites()
     {
-        return $this->belongsToMany(NewsArticle::class, 'favorites')->withTimestamps();
+        return $this->belongsToMany(NewsArticle::class, 'favorites')
+                    ->withPivot('category')  // Include category_name in the pivot table
+                    ->withTimestamps();
     }
+
+    // public function favoriteNewsArticles()
+    // {
+    //     return $this->belongsToMany(NewsArticle::class, 'favorites')
+    //             ->withPivot('category') 
+    //             ->withTimestamps();
+    // }
+
+    // public function favoriteSportsArticles()
+    // {
+    //     return $this->belongsToMany(SoccerNews::class, 'favorites')
+    //             ->withPivot('category') 
+    //             ->withTimestamps();
+    // }
 }
