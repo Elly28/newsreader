@@ -7,8 +7,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="manifest" href="site.webmanifest">
-		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('/img/favicon.ico') }}">
-
+		
 		<!-- CSS here -->
         <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/owl.carousel.min.css') }}">
@@ -34,7 +33,6 @@
     
     @include('shared.footer')
    
-	<!-- JS here -->
 	
 		<!-- All JS Custom Plugins Link Here here -->
         <script src="{{ asset('js/vendor/modernizr-3.5.0.min.js') }}"></script>
@@ -74,6 +72,33 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="{{ asset('js/plugins.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
+
+        <script>
+            // Function to toggle between light and dark theme
+            $(document).ready(function () {
+                // Check if the theme is stored in localStorage
+                if (localStorage.getItem("theme") === "dark") {
+                    $("body").addClass("dark-theme").removeClass("light-theme");
+                } else {
+                    $("body").addClass("light-theme").removeClass("dark-theme");
+                }
+        
+                // Toggle the theme on button click
+                $("#theme-toggle").click(function () {
+                    if ($("body").hasClass("light-theme")) {
+                        // Switch to dark theme
+                        $("body").removeClass("light-theme").addClass("dark-theme");
+                        localStorage.setItem("theme", "dark");
+                        $(this).text("Toggle Light Mode");
+                    } else {
+                        // Switch to light theme
+                        $("body").removeClass("dark-theme").addClass("light-theme");
+                        localStorage.setItem("theme", "light");
+                        $(this).text("Toggle Dark Mode");
+                    }
+                });
+            });
+        </script>
 
         @yield('scripts')
         

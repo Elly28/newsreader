@@ -87,7 +87,7 @@ class SoccerNewsController extends Controller
      */
     public function show($id)
     {
-        $article = NewsArticle::findOrFail($id);
+        $article = SoccerNews::findOrFail($id);
         $article->increment('read_count');
         $categories = ["General", "Sport", "Lifestyle", "Travel", "Technology"];
         return view('news.show', compact('article', 'categories'));
