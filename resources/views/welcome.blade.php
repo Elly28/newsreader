@@ -188,7 +188,7 @@
     <section class="whats-news-area pt-50 pb-20">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-10">
                     <div class="row d-flex justify-content-between">
                         <div class="col-lg-3 col-md-3">
                             <div class="section-tittle mb-30">
@@ -275,7 +275,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single-what-news mb-100">
                                 <div class="what-img">
-                                    <img src="https://placehold.co/360x335" alt="">
+                                    <img src="https://placehold.co/470x335" alt="">
                                 </div>
                                 <div class="what-cap">
                                     <span class="color1">${article.category}</span>

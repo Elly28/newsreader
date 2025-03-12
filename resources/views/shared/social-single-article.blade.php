@@ -46,6 +46,7 @@
     </div>
     <!-- New Poster -->
     <div class="news-poster d-none d-lg-block">
-        <img src="{{ asset('/img/news/news_card.jpg') }}" alt="">
+        {{-- <img src="{{ asset('/img/news/news_card.jpg') }}" alt=""> --}}
+        <img src="https://placehold.co/300x755" alt="">
     </div>
 </div>

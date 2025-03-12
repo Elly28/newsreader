@@ -9,7 +9,7 @@
                             <div class="header-info-left">
                                 <ul>
                                     <li><img src="{{ asset('/img/icon/header_icon1.png') }}" alt="">34ºc, Sunny </li>
-                                    <li><img src="{{ asset('img/icon/header_icon1.png') }}" alt="">{{ date('l, jS F, Y') }}</li>
+                                    <li><img src="{{ asset('img/icon/header_icon1.png') }} " alt="">{{ date('l, jS F, Y') }}</li>
                                 </ul>
                             </div>
                             <div class="header-info-right">
@@ -41,7 +41,8 @@
                         <!-- Logo -->
                         <div class="col-xl-12 col-lg-12 col-md-12">
                             <div class="header-banner f-right ">
-                                <img src="{{ asset('/img/hero/header_card.jpg') }}" alt="">
+                                {{-- <img src="{{ asset('img/hero/header_card.jpg') }}" alt="Fallback Image"> --}}
+                                <img src="https://placehold.co/1200x100" alt="Fallback Image">
                             </div>
                         </div>
                     </div>
@@ -69,16 +70,10 @@
                         </div>             
                         <div class="col-xl-2 col-lg-2 col-md-4">
                             <div class="header-right-btn f-right d-none d-lg-block">
-                                {{-- <i class="fas fa-search special-tag"></i> --}}
                                 <!-- Theme Toggle Button -->
                                 <div class="">
                                     <button id="theme-toggle" class="btn btn-primary">Toggle Dark Mode</button>
                                 </div>
-                                {{-- <div class="search-box">
-                                    <form action="#">
-                                        <input type="text" placeholder="Search">
-                                    </form>
-                                </div> --}}
                             </div>
                         </div>
                         <!-- Mobile Menu -->
