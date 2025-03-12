@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsArticle;
+use App\Http\Controllers\SoccerNewsController;
 use App\Models\SoccerNews;
 use jcobhams\NewsApi\NewsApi;
 use Carbon\Carbon;
@@ -15,6 +16,18 @@ class NewsController extends Controller
      * @return void
      */
     public function index() {
+
+        $articlesCount = NewsArticle::count();
+        $soccerArticlesCount = SoccerNews::count();
+
+        if ($articlesCount === 0) {
+            $this->fetchLatestNews();
+        }
+
+        if ($soccerArticlesCount === 0) {
+            $soccer = new SoccerNewsController();
+            $soccer->fetchLatestSoccerNews();
+        }
                 
         $latestSoccerNews = SoccerNews::latest()->paginate(10);
         $latestArticles = NewsArticle::orderBy('created_at', 'desc')->get();
