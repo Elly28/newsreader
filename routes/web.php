@@ -6,7 +6,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SoccerNewsController;
 use App\Http\Controllers\FavoritesController;
 
-Route::get('/', [NewsController::class, 'index']);
+Route::get('/', [NewsController::class, 'index'])->name('home');
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/news/category/{category}', [NewsController::class, 'filterByCategory']);
 Route::get('/news/offline', [NewsController::class, 'offlineArticles']);
@@ -24,7 +24,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth',])->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/news/{articleId}/favorite', [NewsController::class, 'addToFavorites'])->name('news.favorite');
+    Route::post('/news/{articleId}/unfavorite', [NewsController::class, 'removeFromFavorites'])->name('news.unfavorite');
+
     // Favorite an article
     Route::post('/article/{articleId}/favorite', [FavoritesController::class, 'favorite'])->name('article.favorite');
 
@@ -33,14 +39,6 @@ Route::middleware(['auth'])->group(function () {
     
     // View all favorites
     Route::get('/favorites', [FavoritesController::class, 'showFavorites'])->name('favorites.index');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/news/{articleId}/favorite', [NewsController::class, 'addToFavorites'])->name('news.favorite');
-    Route::post('/news/{articleId}/unfavorite', [NewsController::class, 'removeFromFavorites'])->name('news.unfavorite');
 });
 
 require __DIR__.'/auth.php';

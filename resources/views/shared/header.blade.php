@@ -3,26 +3,38 @@
    <div class="header-area">
         <div class="main-header ">
             <div class="header-top black-bg d-none d-md-block">
-               <div class="container">
-                   <div class="col-xl-12">
+                <div class="container">
+                    <div class="col-xl-12">
                         <div class="row d-flex justify-content-between align-items-center">
                             <div class="header-info-left">
-                                <ul>     
+                                <ul>
                                     <li><img src="{{ asset('/img/icon/header_icon1.png') }}" alt="">34ºc, Sunny </li>
                                     <li><img src="{{ asset('img/icon/header_icon1.png') }}" alt="">{{ date('l, jS F, Y') }}</li>
                                 </ul>
                             </div>
                             <div class="header-info-right">
-                                <ul class="header-social">    
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                   <li> <a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                                <ul class="header-auth d-flex align-items-center">
+                                    @guest
+                                        <li><a href="{{ route('login') }}" class="btn btn-primary btn-sm mr-2">Login</a></li>
+                                        <li><a href="{{ route('register') }}" class="btn btn-secondary btn-sm">Sign Up</a></li>
+                                    @endguest
+            
+                                    @auth
+                                        <li style="color: white" class="mr-2">Welcome, {{ Auth::user()->name }}!</li> <!-- Display user's name -->
+                                        <li>
+                                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                                            </form>
+                                        </li>
+                                    @endauth
                                 </ul>
                             </div>
                         </div>
-                   </div>
-               </div>
+                    </div>
+                </div>
             </div>
+            
             <div class="header-mid d-none d-md-block">
                <div class="container">
                     <div class="row d-flex align-items-center">
